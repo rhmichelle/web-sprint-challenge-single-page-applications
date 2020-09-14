@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import * as yup from 'yup';
+import axios from 'axios';
 
 
 const WrapperDiv = styled.div`
@@ -31,8 +32,6 @@ const Pizza = () => {
     const [pizza, setPizza] = useState(initialFormState);
     const [errors, setErrors] = useState(initialFormState);
     // console.log('Errors', errors.name)
-
-
 
 
     const schemaCompare = yup.object().shape({
@@ -89,7 +88,17 @@ const Pizza = () => {
 
     function submitForm(event) {
         event.preventDefault();
-        console.log('Form Submitted');
+        
+        axios
+        .post('https://reqres.in/api/users', pizza)
+        .then(response => {
+            console.log(response.data);
+        })
+        .catch(err => {
+            console.log(err);
+        })
+
+        setPizza(initialFormState);
     }
 
 

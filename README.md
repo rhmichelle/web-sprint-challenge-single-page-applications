@@ -43,7 +43,7 @@ Demonstrate your understanding of this week's concepts by answering the followin
 - [X] Clone your OWN version of the repository (Not Lambda's by mistake!)
 - [X] Create a new branch: `git checkout -b <firstName-lastName>`
 - [X] Implement the project on your newly created `<firstName-lastName>` branch, committing changes regularly
-- [ ] Push commits: `git push origin <firstName-lastName>`
+- [X] Push commits: `git push origin <firstName-lastName>`
 
 ### Task 2: Project Requirements
 
@@ -52,11 +52,11 @@ Your finished project must include all of the following requirements:
 - [X] A homepage that has a "/" route and links to your form (button, nav bar, or any other type of link is acceptable)
 - [X] A form with a "/pizza" route
 - [X] A name text input field
-- [ ] Validation for name - name must be at least 2 characters
+- [X] Validation for name - name must be at least 2 characters
 - [X] A dropdown for pizza size
 - [X] A checklist for toppings - at least 4 (hint: name each separately!)
 - [X] Text input for special instructions
-- [ ] An Add to Order button that submits form and returns a database record of name, size, toppings and special instructions
+- [X] An Add to Order button that submits form and returns a database record of name, size, toppings and special instructions
 
 #### Testing MVP
 
