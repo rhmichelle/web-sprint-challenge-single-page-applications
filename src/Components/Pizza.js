@@ -20,11 +20,11 @@ const Pizza = () => {
     const initialFormState = {
         name: '',
         size: '',
-        pepperoni: '',
-        sausage: '',
-        onion: '',
-        greenPepper: '', 
-        extraCheese: '',
+        pepperoni: false,
+        sausage: false,
+        onion: false,
+        greenPepper: false, 
+        extraCheese: false,
         specialInstructions: ''
     }
 
@@ -41,9 +41,9 @@ const Pizza = () => {
             .required('Name needed')
             .min(2),
         size: yup.string().required().oneOf(['Extra Large', 'Large', 'Medium', 'Small', 'Tiny']),
-        pepperoni: yup.boolean(),
-        sausage: yup.boolean(),
-        onion: yup.boolean(),
+        pepperoni: yup.bool().required(),
+        sausage: yup.bool(),
+        onion: yup.bool(),
         greenPepper: yup.boolean(),
         extraCheese: yup.boolean(),
         specialInstructions: yup.string()
@@ -68,7 +68,7 @@ const Pizza = () => {
         schemaCompare
             .isValid(initialFormState)
             .then(valid => {
-            console.log("valid?", valid);
+            // console.log("valid?", valid);
         })
     }, [initialFormState])
 
@@ -83,12 +83,12 @@ const Pizza = () => {
         validateChange(event);
         setPizza(newStateObj);
     }
-    console.log('Pizza', pizza);
+    // console.log('Pizza', pizza);
 
 
 
-    const submitForm = (event) => {
-        event.preventDefault()
+    function submitForm(event) {
+        event.preventDefault();
         console.log('Form Submitted');
     }
 
