@@ -1,10 +1,23 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import * as yup from 'yup';
 
+
+const WrapperDiv = styled.div`
+        margin-left: 10rem;
+    `;
+
+const CheckBoxDiv = styled.div`
+        width: 40%;
+        display: flex;
+        flex-direction: column;
+`;
 
 
 const Pizza = () => {
-    const [pizza, setPizza] = useState({
+
+    const initialFormState = {
         name: '',
         size: '',
         pepperoni: '',
@@ -13,7 +26,20 @@ const Pizza = () => {
         greenPepper: '', 
         extraCheese: '',
         specialInstructions: ''
+    }
+
+    const [pizza, setPizza] = useState(initialFormState);
+    const [errors, setErrors] = useState(initialFormState);
+
+
+
+
+    const schemaCompare = yup.object().shape({
+        name: yup.string().required('')
     })
+
+
+
 
     const handleChanges = (event) => {
         // console.log(event.target.value)
@@ -24,89 +50,109 @@ const Pizza = () => {
     console.log('Pizza', pizza);
 
 
+
+    const submitForm = (event) => {
+        event.preventDefault()
+        console.log('Form Submitted');
+    }
+
+
+
+
+
     return (
-        <div>
+        <WrapperDiv>
             <h1>Build Your Own Pizza</h1>
             <Link to='/'>
                 <button>Home</button>
             </Link>
             <br>
             </br>
-
-            <label htmlFor='First and Last Name'><h3>First and Last Name:</h3></label>
-            <input
-                id='name'
-                type='text'
-                name='name'
-                onChange={handleChanges}
-                value={pizza.name}
-            />
-
-            <label htmlFor='Pizza Size'>Pizza Size</label>
-                <h3>Choice of Size</h3>
-                <select id='pizza size' name='size' onChange={handleChanges} value={pizza.size}>
-                    <option value='Extra Large'>Extra Large</option>
-                    <option value='Large'>Large</option>
-                    <option value='Medium'>Medium</option>
-                    <option value='Small'>Small</option>
-                    <option value='Personal'>Tiny</option>
-                </select>
-
-
-            <h3>Add Topings</h3>
-            <label htmlFor='Pepperoni'>Pepperoni</label>
+            <form onSubmit={submitForm}>
+                <label htmlFor='First and Last Name'><h3>First and Last Name:</h3></label>
                 <input
-                    id='Pepperoni'
-                    type='checkbox'
-                    name='pepperoni'
+                    id='name'
+                    type='text'
+                    name='name'
                     onChange={handleChanges}
-                    value={pizza.pepperoni}
-                />
-            <label htmlFor='Sausage'>Sausage</label>
-                <input
-                    id='Sausage'
-                    type='checkbox'
-                    name='sausage'
-                    onChange={handleChanges}
-                    value={pizza.sausage}
-                />
-            <label htmlFor='Onion'>Onion</label>
-                <input
-                    id='Onion'
-                    type='checkbox'
-                    name='onion'
-                    onChange={handleChanges}
-                    value={pizza.onion}
-                />
-            <label htmlFor='Green Pepper'>Green Pepper</label>
-                <input
-                    id= 'Green Pepper'
-                    type='checkbox'
-                    name='greenPepper'
-                    onChange={handleChanges}
-                    value={pizza.greenPepper}
-                />
-            <label htmlFor='Extra Cheese'>Extra Cheese</label>
-                <input
-                    id='Extra Cheese'
-                    type='checkbox'
-                    name='extraCheese'
-                    onChange={handleChanges}
-                    value={pizza.extraCheese}
+                    value={pizza.name}
                 />
 
-            
+                <label htmlFor='Pizza Size'><h3>Pizza Size:</h3></label>
+                    <select id='pizza size' name='size' onChange={handleChanges} value={pizza.size}>
+                        <option value='Extra Large'>Extra Large</option>
+                        <option value='Large'>Large</option>
+                        <option value='Medium'>Medium</option>
+                        <option value='Small'>Small</option>
+                        <option value='Personal'>Tiny</option>
+                    </select>
 
-            <h3>Special Instructions</h3>
-            <label htmlFor="Special Instructions">Special Instructions</label>
-                <textarea
-                    id='Special Instructions'
-                    name='specialInstructions'
-                    onChange={handleChanges}
-                    value={pizza.specialInstructions}
-                />
+                <CheckBoxDiv>
+                    <h3>Add Topings:</h3>
+                    <label htmlFor='Pepperoni'>
+                        Pepperoni
+                        <input
+                            id='Pepperoni'
+                            type='checkbox'
+                            name='pepperoni'
+                            onChange={handleChanges}
+                            value={pizza.pepperoni}
+                        />
+                    </label>
+                    <label htmlFor='Sausage'>
+                        Sausage
+                        <input
+                            id='Sausage'
+                            type='checkbox'
+                            name='sausage'
+                            onChange={handleChanges}
+                            value={pizza.sausage}
+                        />
+                    </label>
+                    <label htmlFor='Onion'>
+                        Onion
+                        <input
+                            id='Onion'
+                            type='checkbox'
+                            name='onion'
+                            onChange={handleChanges}
+                            value={pizza.onion}
+                        />
+                    </label>
+                    <label htmlFor='Green Pepper'>
+                        Green Pepper
+                        <input
+                            id= 'Green Pepper'
+                            type='checkbox'
+                            name='greenPepper'
+                            onChange={handleChanges}
+                            value={pizza.greenPepper}
+                        />
+                    </label>
+                    <label htmlFor='Extra Cheese'>
+                        Extra Cheese
+                        <input
+                            id='Extra Cheese'
+                            type='checkbox'
+                            name='extraCheese'
+                            onChange={handleChanges}
+                            value={pizza.extraCheese}
+                        />
+                    </label>
+                </CheckBoxDiv>
+                
 
-        </div>
+                <label htmlFor="Special Instructions"><h3>Special Instructions</h3></label>
+                    <textarea
+                        id='Special Instructions'
+                        name='specialInstructions'
+                        onChange={handleChanges}
+                        value={pizza.specialInstructions}
+                    />
+                <br></br>
+                <button type='submit'>Place Order</button>
+            </form>
+        </WrapperDiv>
     )
 }
 
