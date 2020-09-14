@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import * as yup from 'yup';
@@ -30,21 +30,57 @@ const Pizza = () => {
 
     const [pizza, setPizza] = useState(initialFormState);
     const [errors, setErrors] = useState(initialFormState);
+    // console.log('Errors', errors.name)
 
 
 
 
     const schemaCompare = yup.object().shape({
-        name: yup.string().required('')
+        name: yup
+            .string()
+            .required('Name needed')
+            .min(2),
+        size: yup.string().required().oneOf(['Extra Large', 'Large', 'Medium', 'Small', 'Tiny']),
+        pepperoni: yup.boolean(),
+        sausage: yup.boolean(),
+        onion: yup.boolean(),
+        greenPepper: yup.boolean(),
+        extraCheese: yup.boolean(),
+        specialInstructions: yup.string()
+    });
+
+
+    const validateChange = event => {
+        yup
+            .reach(schemaCompare, event.target.name)
+            .validate(event.target.value)
+            .then(valid => {
+            setErrors({...errors, [event.target.name]: ''})
+        })
+        .catch(error => {
+            console.log('error!', error)
+            setErrors({...errors, [event.target.name]: error.errors[0] });
     })
+};
+
+
+    useEffect(() => {
+        schemaCompare
+            .isValid(initialFormState)
+            .then(valid => {
+            console.log("valid?", valid);
+        })
+    }, [initialFormState])
 
 
 
 
     const handleChanges = (event) => {
         // console.log(event.target.value)
+        event.persist();
         const newStateObj = {...pizza, [event.target.name]:
             event.target.type === 'checkbox' ? event.target.checked : event.target.value }
+        validateChange(event);
         setPizza(newStateObj);
     }
     console.log('Pizza', pizza);
@@ -77,7 +113,7 @@ const Pizza = () => {
                     onChange={handleChanges}
                     value={pizza.name}
                 />
-
+                {errors.name.length > 0 ? <p className='error'>{errors.name}</p> : null}
                 <label htmlFor='Pizza Size'><h3>Pizza Size:</h3></label>
                     <select id='pizza size' name='size' onChange={handleChanges} value={pizza.size}>
                         <option value='Extra Large'>Extra Large</option>
